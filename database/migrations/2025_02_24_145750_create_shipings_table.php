@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('shippings', function (Blueprint $table) {
+        Schema::create('shipings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->constrained('orders')->onDelete('cascade');
-            $table->string('shipping_method');
-            $table->string('shipping_status');
-            $table->decimal('shipping_cost', 10, 2);
+            $table->string('shiping_method');
+            $table->string('shiping_status');
+            $table->decimal('shiping_cost', 10, 2);
             $table->string('recipient_name');
             $table->text('address');
             $table->string('city');

@@ -6,7 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
-
+use Inertia\Inertia;
 class StoreController extends Controller
 {
     //
@@ -19,8 +19,6 @@ class StoreController extends Controller
         }
     
         $products = $query->paginate(10);
-    
-        // Ambil hanya gender unik
         $genders = Product::select('gender')->distinct()->pluck('gender');
     
         $categories = Category::whereNull('parent_id')
@@ -31,8 +29,15 @@ class StoreController extends Controller
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'products' => $products,
-            'genders' => $genders, // Kirim daftar gender unik ke frontend
+            'genders' => $genders,
             'categories' => $categories,
+        ]);
+    }
+
+    public function cart(Request $request){
+        $products = Product::select('id', 'image')->get();
+        return Inertia::render('Cart', [
+            'products' => $products
         ]);
     }
     

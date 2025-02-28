@@ -10,7 +10,7 @@ class Shipping extends Model
     use HasFactory;
 
     protected $fillable = [
-        'order_id', 'shipping_method', 'shipping_status', 'shipping_cost',
+        'order_id', 'shiping_method', 'shiping_status', 'shiping_cost',
         'recipient_name', 'address', 'city', 'province', 'zip_code', 'country', 'tracking_number'
     ];
 

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('fraud_status');
             $table->string('payment_token');
             $table->string('snap_token');
-            $table->decimal('gross_amount', 10, 2);
+            $table->unsignedDecimal('gross_amount', 10, 2);
             $table->timestamps();
         });
     }

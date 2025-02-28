@@ -18,5 +18,7 @@
     </head>
     <body class="font-sans antialiased">
         @inertia
+        <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="your-client-key-here"></script>
+
     </body>
 </html>

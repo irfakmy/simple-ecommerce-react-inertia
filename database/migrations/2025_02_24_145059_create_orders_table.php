@@ -17,10 +17,11 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_email');
             $table->string('customer_phone');
-            $table->decimal('subtotal', 10, 2);
-            $table->decimal('total_amount', 10, 2);
+            $table->unsignedDecimal('subtotal', 10, 2);
+            $table->string('snap_token');
+            $table->unsignedDecimal('total_amount', 10, 2);
             $table->string('payment_status');
-            $table->string('shippment_status');
+            $table->string('shipment_status');
             $table->timestamps();
         });
     }
