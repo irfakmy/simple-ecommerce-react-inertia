@@ -20,6 +20,7 @@ Route::get('/order-status', function (Request $request) {
         'order_id' => $request->query('order_id')
     ]);
 });
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 
 
 Route::get('/dashboard', function () {

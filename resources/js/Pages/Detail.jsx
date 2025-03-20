@@ -5,6 +5,8 @@ import Navigation from "@/Components/Navigation/Navigation";
 import Navbar2 from "@/Components/Navbar/Navbar2";
 import { useCart } from "@/Contexts/CartContext";
 import RelatedProducts from "@/Components/RelateProduct/RelateProduct";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 
 const Detail = ({ product, variants }) => {
     const { addToCart, cart } = useCart();
@@ -13,64 +15,65 @@ const Detail = ({ product, variants }) => {
 
     const [selectedSize, setSelectedSize] = useState(null);
     const [selectedColor, setSelectedColor] = useState(uniqueColors[0]);
-    const [customerName, setCustomerName] = useState("");
-    const [customerEmail, setCustomerEmail] = useState("");
-    const [customerPhone, setCustomerPhone] = useState("");
+
+    // State untuk modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalMessage, setModalMessage] = useState("");
 
     const handleAddToCart = () => {
         if (!selectedSize) {
-            alert("Please select a size!");
+            setModalMessage("Please select a size!");
+            setIsModalOpen(true);
             return;
         }
-    
+
         const selectedVariant = variants.find(
             (v) => v.color === selectedColor && v.size === selectedSize
         );
-    
+
         if (!selectedVariant) {
-            alert("Invalid variant selection!");
+            setModalMessage("Invalid variant selection!");
+            setIsModalOpen(true);
             return;
         }
-    
+
         addToCart({ 
-            id: selectedVariant.id,  // ID dari varian produk (product_variants)
-            product_id: product.id,  // Pastikan product_id ikut dikirim
+            id: selectedVariant.id,  
+            product_id: product.id,  
             name: product.name,
             price: selectedVariant.price,
             quantity: 1
         });
-    
-        alert("Product added to cart!");
+
+        setModalMessage("Product added to cart!");
+        setIsModalOpen(true);
     };
-    
 
     const handleCheckout = () => {
         if (cart.length === 0) {
-            alert("Your cart is empty! Please add items before checkout.");
+            setModalMessage("Your cart is empty! Please add items before checkout.");
+            setIsModalOpen(true);
             return;
         }
-    
-        if (!customerName || !customerEmail || !customerPhone) {
-            alert("Please fill in your customer details before checkout.");
-            return;
-        }
-    
+
         router.post("/checkout", { 
-            customer_name: customerName, 
-            customer_email: customerEmail, 
-            customer_phone: customerPhone, 
             order_items: cart.map(item => ({
-                product_id: product.id,  // Gunakan product.id agar valid
-                variant_id: item.id,  // ID dari product_variants (opsional, bisa di-backend)
+                product_id: product.id,
+                variant_id: item.id,
                 quantity: item.quantity,
                 price: item.price,
             }))
         }, {
-            onSuccess: () => alert("Checkout successful!"),
-            onError: (err) => alert("Checkout failed: " + JSON.stringify(err))
+            onSuccess: () => {
+                setModalMessage("Checkout successful!");
+                setIsModalOpen(true);
+            },
+            onError: (err) => {
+                setModalMessage("Checkout failed: SILAHKAN LOGIN TERLEBIH DAHULU, ATAU ANDA BISA MELAKUKAN PEMBELIAN TANPA LOGIN MELALUI ORDER VIA WHATSAPP");  
+                setIsModalOpen(true);
+            }
         });
     };
-    
 
     return (
         <div>
@@ -83,6 +86,7 @@ const Detail = ({ product, variants }) => {
                     </span>
                 </Link>
             </div>
+            
             {/* Detail Produk */}
             <div className="container mx-auto py-10 grid grid-cols-1 md:grid-cols-2 gap-10 p-6 rounded-lg shadow-sm">
                 <div className="flex justify-center">
@@ -128,16 +132,33 @@ const Detail = ({ product, variants }) => {
 
                     {/* Tombol */}
                     <div className="flex justify-center gap-2 mt-8">
-                        <button className="px-6 py-3 bg-gray-800 text-white rounded-lg font-semibold shadow-md hover:bg-gray-900 transition-all" onClick={handleAddToCart}>
-                            Add to Cart
+                        <button className="px-6 py-3 bg-black text-white rounded-lg font-semibold shadow-md hover:bg-white hover:text-black border border-black transition-all" onClick={handleCheckout}>
+                        Add to Cart
                         </button>
                         <button className="px-6 py-3 bg-black text-white rounded-lg font-semibold shadow-md hover:bg-white hover:text-black border border-black transition-all" onClick={handleCheckout}>
                             Check Out
                         </button>
+                        <button className="px-6 py-3 bg-white text-black rounded-lg font-semibold shadow-md hover:bg-green-500 hover:text-white border border-black transition-all" onClick={handleCheckout}>
+                            Via WhatsApp
+                        </button>
                     </div>
                 </div>
             </div>
+
             <RelatedProducts />
+
+            {/* Modal Modern */}
+            <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle>Notification</DialogTitle>
+                        <DialogDescription>{modalMessage}</DialogDescription>
+                    </DialogHeader>
+                    <DialogFooter>
+                        <Button onClick={() => setIsModalOpen(false)}>Close</Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 };
