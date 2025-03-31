@@ -63,14 +63,14 @@ export default function Navigation() {
       </div>
 
       <div className="flex gap-2 w-full md:w-auto justify-center md:justify-end">
-        <Link href="/store" className="border border-black bg-white text-black rounded-lg py-1 px-2 flex items-center gap-2 hover:bg-black hover:text-white">
+        <Link href="/store" className=" bg-white text-black rounded-lg py-1 px-2 flex items-center gap-2 hover:bg-black hover:text-white">
           <House size={20} />
           <span>Home</span>
         </Link>
         {genders.map((gender, index) => (
           <button
             key={index}
-            className="border border-black bg-white text-black rounded-lg py-1 px-2 flex items-center gap-2 hover:bg-black hover:text-white"
+            className=" bg-white text-black rounded-lg py-1 px-2 flex items-center gap-2 hover:bg-black hover:text-white"
           >
             {gender}
           </button>
