@@ -10,7 +10,6 @@ class ExcludeMidtransWebhook
 {
     public function handle(Request $request, Closure $next): Response
     {
-        // Mengecualikan webhook Midtrans dari proteksi CSRF
         if ($request->is('midtrans/webhook')) {
             return $next($request);
         }

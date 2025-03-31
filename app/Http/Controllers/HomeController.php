@@ -25,7 +25,7 @@ class HomeController extends Controller
         ->with('children:id,name,slug,parent_id')
         ->get(['id','name','slug']);
 
-        return inertia('LandingPage', [
+        return inertia('Guest/LandingPage', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'products' => $products,

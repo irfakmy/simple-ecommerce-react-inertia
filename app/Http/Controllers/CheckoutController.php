@@ -14,7 +14,9 @@ class CheckoutController extends Controller
 {
     public function index(Request $request)
     {
-        return response()->json(Order::with('items')->get());
+        return Inertia::render('Product/Cart', [
+            'items' => Order::with('items')->get()
+        ]);
     }
 
     public function processCheckout(Request $request)
@@ -62,7 +64,6 @@ class CheckoutController extends Controller
             ];
         }
     
-        // Konfigurasi Midtrans
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
         Config::$isSanitized = true;
@@ -92,18 +93,18 @@ class CheckoutController extends Controller
             return Inertia::location("https://app.sandbox.midtrans.com/snap/v2/vtweb/{$snapToken}");
         } catch (\Exception $e) {
             Log::error('Midtrans Error: ' . $e->getMessage());
-            return response()->json(['error' => 'Failed to create payment session'], 500);
+            return Inertia::render('Product/Cart', [
+                'error' => 'Failed to create payment session'
+            ]);
         }
     }
     
 
     public function handleNotification(Request $request)
 {
-    // Konfigurasi Midtrans
     Config::$serverKey = env('MIDTRANS_SERVER_KEY');
     Config::$isProduction = env('MIDTRANS_IS_PRODUCTION', false);
 
-    // Ambil data notifikasi dari Midtrans
     $notification = $request->all();
     Log::info('Midtrans Notification:', $notification);
 
@@ -121,7 +122,6 @@ class CheckoutController extends Controller
         return response()->json(['message' => 'Order not found'], 404);
     }
 
-    // Cek status transaksi
     if ($transactionStatus == 'capture') {
         if ($fraudStatus == 'accept') {
             $order->update(['payment_status' => 'paid']);

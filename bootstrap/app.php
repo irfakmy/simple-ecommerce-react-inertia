@@ -20,8 +20,12 @@ return Application::configure(basePath: dirname(__DIR__))
                 'midtrans/webhook', // Tambahkan pengecualian untuk webhook Midtrans
             ]),
         ]);
-
         //
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias([
+            'admin' => \App\Http\Middleware\AdminMiddleware::class, // ✅ Daftarkan middleware sebagai alias
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

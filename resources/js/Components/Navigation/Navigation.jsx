@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, usePage, router } from "@inertiajs/react";
-import { ShoppingBag, ChevronDown, Search } from "lucide-react";
+import { House, ChevronDown, Search } from "lucide-react";
 
 export default function Navigation() {
   const { categories = [], genders = [], search = "" } = usePage().props;
@@ -20,8 +20,7 @@ export default function Navigation() {
   };
 
   return (
-    <div className="flex flex-wrap items-center gap-4 bg-white p-4 shadow-sm rounded-xl w-full md:justify-between">
-      {/* Bagian Kategori */}
+    <div className="fixed top-16 left-0 w-full z-40 backdrop-blur-md bg-white/60 border-b border-gray-200 shadow-sm p-4 flex flex-wrap items-center gap-4 md:justify-between">
       <div className="flex flex-wrap items-center gap-4 w-full md:w-auto">
         <div className="relative w-full md:w-auto">
           <button 
@@ -49,7 +48,6 @@ export default function Navigation() {
           )}
         </div>
 
-        {/* Input Pencarian */}
         <form onSubmit={handleSearch} className="relative w-full md:w-64">
           <input
             type="text"
@@ -64,12 +62,15 @@ export default function Navigation() {
         </form>
       </div>
 
-      {/* Tombol Kategori Gender */}
       <div className="flex gap-2 w-full md:w-auto justify-center md:justify-end">
+        <Link href="/store" className="border border-black bg-white text-black rounded-lg py-1 px-2 flex items-center gap-2 hover:bg-black hover:text-white">
+          <House size={20} />
+          <span>Home</span>
+        </Link>
         {genders.map((gender, index) => (
           <button
             key={index}
-            className="px-4 py-2 bg-white border rounded-full hover:bg-gray-200"
+            className="border border-black bg-white text-black rounded-lg py-1 px-2 flex items-center gap-2 hover:bg-black hover:text-white"
           >
             {gender}
           </button>

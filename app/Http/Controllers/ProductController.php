@@ -16,7 +16,6 @@ class ProductController extends Controller
     {
         $query = Product::with('category.parent');
     
-        // **Filter berdasarkan kategori (termasuk kategori anak)**
         if ($request->has('category') && !empty($request->category)) {
             $query->whereHas('category', function ($q) use ($request) {
                 $q->where('slug', $request->category)
@@ -25,20 +24,17 @@ class ProductController extends Controller
                   });
             });
         }
-    
-        // **Filter berdasarkan pencarian**
         if ($request->has('search') && !empty($request->search)) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
     
-        // Ambil produk yang sudah difilter
         $products = $query->paginate(10)->appends(request()->query());
     
         $category = Category::whereNull('parent_id')
             ->with('children:id,name,slug,parent_id')
             ->get(['id', 'name', 'slug']);
     
-        return inertia('Index', [
+        return inertia('Guest/Index', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'products' => $products,
@@ -60,13 +56,13 @@ class ProductController extends Controller
         ->with('children:id,name,slug,parent_id')
         ->get(['id', 'name', 'slug']);
 
-        $relatedProducts = Product::with('category.parent') // Tambahkan relasi category
+        $relatedProducts = Product::with('category.parent')
         ->where('category_id', $product->category_id)
         ->where('id', '!=', $product->id)
         ->limit(4)
         ->get();
 
-        return inertia('Detail', [
+        return inertia('Product/Detail', [
             'product' => $product,
             'variants' => $variants,    
             'genders' => $genders,

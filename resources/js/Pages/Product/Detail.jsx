@@ -79,15 +79,13 @@ const Detail = ({ product, variants }) => {
         <div>
             <Navbar2 />
             <Navigation />
-            <div className="flex ml-5 mt-3">
+            <div className="flex ml-5 mt-44">
                 <Link href="/store">
                     <span className="flex font-bold">
                         <ArrowLeft /> Go Back
                     </span>
                 </Link>
             </div>
-            
-            {/* Detail Produk */}
             <div className="container mx-auto py-10 grid grid-cols-1 md:grid-cols-2 gap-10 p-6 rounded-lg shadow-sm">
                 <div className="flex justify-center">
                     <img src={`/img/${product.image}`} alt={product.name} className="w-96 h-96 object-cover rounded-xl shadow-md" />
@@ -98,8 +96,6 @@ const Detail = ({ product, variants }) => {
                     <p className="text-3xl font-semibold text-red-800 mt-2">
                         Rp {product.price}
                     </p>
-
-                    {/* Pilihan Warna */}
                     <div className="mt-6">
                         <p className="font-semibold text-gray-700">Color</p>
                         <div className="flex gap-2 mt-2">
@@ -113,8 +109,6 @@ const Detail = ({ product, variants }) => {
                             ))}
                         </div>
                     </div>
-
-                    {/* Pilihan Ukuran */}
                     <div className="mt-6">
                         <p className="font-semibold text-gray-700">Size</p>
                         <div className="flex gap-3 mt-2">
@@ -129,16 +123,14 @@ const Detail = ({ product, variants }) => {
                             ))}
                         </div>
                     </div>
-
-                    {/* Tombol */}
                     <div className="flex justify-center gap-2 mt-8">
-                        <button className="px-6 py-3 bg-black text-white rounded-lg font-semibold shadow-md hover:bg-white hover:text-black border border-black transition-all" onClick={handleCheckout}>
+                        <button className="px-6 py-3 bg-black text-white rounded-lg font-semibold shadow-md hover:bg-white hover:text-black border border-black transition-all truncate" onClick={handleAddToCart}>
                         Add to Cart
                         </button>
-                        <button className="px-6 py-3 bg-black text-white rounded-lg font-semibold shadow-md hover:bg-white hover:text-black border border-black transition-all" onClick={handleCheckout}>
+                        <button className="px-6 py-3 bg-black text-white rounded-lg font-semibold shadow-md hover:bg-white hover:text-black border border-black transition-all truncate" onClick={handleCheckout}>
                             Check Out
                         </button>
-                        <button className="px-6 py-3 bg-white text-black rounded-lg font-semibold shadow-md hover:bg-green-500 hover:text-white border border-black transition-all" onClick={handleCheckout}>
+                        <button className="px-6 py-3 bg-white text-black rounded-lg font-semibold shadow-md hover:bg-green-500 hover:text-white border border-black transition-all truncate" onClick={handleCheckout}>
                             Via WhatsApp
                         </button>
                     </div>
@@ -146,8 +138,6 @@ const Detail = ({ product, variants }) => {
             </div>
 
             <RelatedProducts />
-
-            {/* Modal Modern */}
             <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                 <DialogContent>
                     <DialogHeader>

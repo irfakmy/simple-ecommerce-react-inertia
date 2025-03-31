@@ -1,6 +1,9 @@
-import { useCart } from "../Contexts/CartContext";
+import { useCart } from "../../Contexts/CartContext";
 import { useState } from "react";
 import { router } from "@inertiajs/react";
+import Navbar from "@/Components/Navbar/Navbar2";
+import Navigation from "@/Components/Navigation/Navigation";
+import Footer from "@/Components/Footer/Footer";
 
 export default function Cart() {
     const { cart, addToCart, decreaseQuantity, removeFromCart, clearCart } = useCart();
@@ -20,7 +23,7 @@ export default function Cart() {
     const totalAmount = subtotal;
 
     const handleCheckout = () => {
-        setCheckoutOpen(true); // Buka modal checkout
+        setCheckoutOpen(true);
     };
 
     const handleConfirmCheckout = () => {
@@ -65,8 +68,11 @@ export default function Cart() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-            <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-lg">
+        <div className="">
+            <Navbar />
+            <Navigation />
+        <div className="min-h-screen flex items-center justify-center p-4">
+            <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-sm">
                 <h2 className="text-2xl font-bold mb-4 text-gray-800 text-center">Keranjang Belanja</h2>
                 <div className="overflow-x-auto">
                     <table className="w-full border-collapse border border-gray-300 rounded-lg">
@@ -102,16 +108,14 @@ export default function Cart() {
                 <div className="mt-6 flex flex-col md:flex-row justify-between items-center gap-4">
                     <h3 className="text-lg font-bold text-gray-800">Total: Rp {totalAmount.toLocaleString()}</h3>
                     <div className="flex flex-col md:flex-row gap-3 w-full md:w-auto">
-                        <button onClick={clearCart} className="w-full md:w-auto px-5 py-2 bg-gray-800 text-white rounded hover:bg-gray-900">
+                        <button onClick={clearCart} className="w-full md:w-auto px-5 py-2 bg-red-500 text-white rounded hover:bg-white hover:text-black border">
                             Kosongkan Keranjang
                         </button>
-                        <button onClick={handleCheckout} className="w-full md:w-auto px-5 py-2 bg-black text-white rounded hover:bg-gray-900">
+                        <button onClick={handleCheckout} className="w-full md:w-auto hover:bg-white hover:text-black border border-black px-5 py-2 bg-black text-white rounded hover:bg-gray-900">
                             Checkout
                         </button>
                     </div>
                 </div>
-
-                {/* Modal Checkout */}
                 {isCheckoutOpen && (
                     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
                         <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
@@ -161,6 +165,8 @@ export default function Cart() {
                     </div>
                 )}
             </div>
+        </div>
+        <Footer />
         </div>
     );
 }

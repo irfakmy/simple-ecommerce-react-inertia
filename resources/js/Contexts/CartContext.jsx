@@ -12,7 +12,7 @@ export function CartProvider({ children }) {
                 setCart(JSON.parse(savedCart));
             } catch (error) {
                 console.error("Invalid cart data in localStorage", error);
-                localStorage.removeItem("cart"); // Hapus jika data rusak
+                localStorage.removeItem("cart");    
             }
         }
     }, []);

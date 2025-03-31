@@ -3,7 +3,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 
 const PaymentPending = () => {
-    const { order_id } = useParams();  // Mendapatkan order_id dari URL
+    const { order_id } = useParams();L
 
     return (
         <div className="payment-pending">

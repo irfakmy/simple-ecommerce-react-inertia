@@ -17,7 +17,6 @@ const RelatedProducts = () => {
                         key={product.id}
                         className="w-full bg-white border border-gray-200 rounded-xl overflow-hidden transition-transform transform hover:scale-105"
                     >
-                        {/* Gambar */}
                         <div className="relative w-full h-56">
                             <Link href={`/detail/${product.id}`} className="block w-full h-full">
                                 <img
@@ -32,8 +31,6 @@ const RelatedProducts = () => {
                                 />
                             </Link>
                         </div>
-
-                        {/* Detail Produk */}
                         <div className="p-4">
                             <h3 className="text-md font-semibold text-gray-900">{product.name}</h3>
                             <div className="flex items-center mt-2 mb-3">
@@ -51,7 +48,7 @@ const RelatedProducts = () => {
                             <div className="mt-4">
                                 <Link
                                     href={`/detail/${product.id}`}
-                                    className="block text-center text-white bg-black hover:bg-white hover:text-black transition-colors font-bold border border-black rounded-lg text-sm px-5 py-2.5"
+                                    className="block text-center text-white bg-black hover:bg-white hover:text-black transition-colors font-bold border border-black rounded-lg text-sm truncate px-5 py-2.5"
                                 >
                                     View Product
                                 </Link>

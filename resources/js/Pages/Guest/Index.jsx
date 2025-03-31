@@ -7,7 +7,7 @@ import {Head} from "@inertiajs/react"
 
 const Index = () => {
     return (
-        <div>
+        <div className="pt-44">
             <Head titile="Index-Store" />
             <Navbar />
             <Navigation />

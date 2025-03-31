@@ -1,4 +1,4 @@
-import { usePage } from '@inertiajs/react';
+uimport { usePage } from '@inertiajs/react';
 import { ArrowLeft } from 'lucide-react';
 
 const PaymentFailed = () => {

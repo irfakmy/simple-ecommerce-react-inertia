@@ -25,7 +25,7 @@ class StoreController extends Controller
             ->with('children:id,name,slug,parent_id')
             ->get(['id', 'name', 'slug']);
     
-        return inertia('Index', [
+        return inertia('Guest/Index', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
             'products' => $products,
@@ -36,7 +36,7 @@ class StoreController extends Controller
 
     public function cart(Request $request){
         $products = Product::select('id', 'image')->get();
-        return Inertia::render('Cart', [
+        return Inertia::render('Product/Cart', [
             'products' => $products
         ]);
     }

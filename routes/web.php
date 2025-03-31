@@ -3,10 +3,12 @@
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\StoreController;
 use Inertia\Inertia;
+use App\Http\Controllers\Auth\AuthenticationController;
+use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Http\Request;
 
 Route::get('/', [HomeController::class, 'index'])->name('landing.page');
@@ -15,22 +17,28 @@ Route::get('/detail/{id}', [ProductController::class, 'show'])->name('product.sh
 Route::get('/cart', [StoreController::class, 'cart'])->name('cart');
 Route::post('/checkout', [CheckoutController::class, 'processCheckout'])->name('checkout');
 Route::post('/midtrans/webhook', [CheckoutController::class, 'handleNotification']);
+Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 Route::get('/order-status', function (Request $request) {
     return Inertia::render('PaymentSuccess', [
         'order_id' => $request->query('order_id')
     ]);
 });
-Route::get('/product', [ProductController::class, 'index'])->name('product.index');
 
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/login', [AuthenticationController::class, 'showLogin']);
+Route::post('/login-dashboard', [AuthenticationController::class, 'login']);
+Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
+
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/admin/dashboard', function () {
+            return Inertia::render('Admin/Dashboard');
+        })->name('admin.dashboard');
+    });
 });
 
-require __DIR__.'/auth.php';

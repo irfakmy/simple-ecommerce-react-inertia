@@ -3,7 +3,7 @@ import { useState } from "react";
 import { AlignLeft, ShoppingBag, ChevronDown, Search } from 'lucide-react';
 
 export default function Navbar() {
-    const { categories } = usePage().props; // Ambil kategori dari Laravel
+    const { categories } = usePage().props;
     const [selectedCategory, setSelectedCategory] = useState("Categories");
     const [isVisible, setIsVisible] = useState(false);
     const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -29,11 +29,9 @@ export default function Navbar() {
                 </div>
             </nav>
 
-            {/* Navigation */}
             {isVisible && (
                 <div id='navigation' className="flex flex-wrap items-center gap-4 bg-white p-4 shadow-sm rounded-xl w-full md:justify-between">
                     <div className="flex sm:flex-wrap items-center gap-4 w-full md:w-auto truncate">
-                        {/* Kategori Dropdown */}
                         <div className="static w-full md:w-auto z-50">
                         <button 
                                 onClick={() => setIsCategoryOpen(!isCategoryOpen)}
@@ -41,8 +39,6 @@ export default function Navbar() {
                             >
                                 {selectedCategory} <ChevronDown className="ml-auto md:ml-2 w-6 h-4" />
                             </button>
-
-                            {/* Dropdown Kategori dengan absolute positioning */}
                             {isCategoryOpen && (
                                 <div className="absolute top-full left-12 md:w-auto mt-1 bg-white border rounded-lg shadow-lg z-50">
                                     {categories.length > 0 ? (
@@ -64,7 +60,6 @@ export default function Navbar() {
                                 </div>
                             )}
                         </div>
-                        {/* Input Search */}
                         <div className="relative w-full md:w-64">
                             <input
                                 type="text"
