@@ -17,7 +17,7 @@ export default function Login() {
         e.preventDefault();
         setLoading(true);
 
-        router.post("/login-dashboard", formData, {
+        router.post("/login", formData, {
             onError: (err) => {
                 setErrors(err);
                 setLoading(false);

@@ -26,19 +26,6 @@ Route::get('/order-status', function (Request $request) {
 
 
 
-Route::get('/login', [AuthenticationController::class, 'showLogin']);
-Route::post('/login-dashboard', [AuthenticationController::class, 'login']);
 Route::post('/logout', [AuthenticationController::class, 'logout'])->name('logout');
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
-
-    Route::middleware(['admin'])->group(function () {
-        Route::get('/admin/dashboard', function () {
-            return Inertia::render('Admin/Dashboard');
-        })->name('admin.dashboard');
-    });
-});
-
+Route::get('/login', [AuthenticationController::class, 'showLogin']);
+Route::post('/login', [AuthenticationController::class, 'login']);

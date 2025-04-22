@@ -19,7 +19,8 @@ class AuthenticationController extends Controller
 
     public function login(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
+        $user = Auth::guard('')->user();
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
@@ -34,8 +35,8 @@ class AuthenticationController extends Controller
         }
     
         if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
-            dd(Auth::check());
-            RateLimiter::hit($throttleKey, 60); // Blokir selama 60 detik setelah 5 percobaan gagal
+            // dd(Auth::check());
+            RateLimiter::hit($throttleKey, 60); 
             return back()->withErrors([
                 'email' => 'Email atau password salah.',
             ]);
@@ -48,10 +49,10 @@ class AuthenticationController extends Controller
         $user = Auth::user();
         
         if ($user->role === 'admin') {
-            return redirect()->intended('/admin/dashboard');
+            return inertia::render('/admin/dashboard');
         }
     
-        return redirect()->intended('/dashboard');
+        return inertia::render('/dashboard');
     }
 
     public function logout(Request $request)
